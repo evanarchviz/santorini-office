@@ -86,6 +86,11 @@ async function init(){
     loader.load("./assets/scene.glb", (gltf) => {
         model = gltf.scene;
         scene.add(model);
+        model.traverse((child) => {
+    if (child.isMesh && child.name === "Cube") {
+        child.visible = false;
+    }
+});
         playerBaseY = SPAWN.y - playerHeight;
     });
 
@@ -299,6 +304,7 @@ function animate(){
 
     renderer.render(scene, camera);
 }
+
 
 
 
