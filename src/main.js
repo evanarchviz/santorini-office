@@ -15,7 +15,7 @@ let isMobile = false;
 let yawObject;
 let pitchObject;
 
-const playerHeight = 1.7;
+const playerHeight = 1.5;
 const playerRadius = 0.35;
 const speed = 4.5;
 const stepHeight = 0.2;
@@ -304,6 +304,7 @@ function animate(){
 
     renderer.render(scene, camera);
 }
+
 
 
 
