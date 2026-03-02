@@ -21,7 +21,7 @@ const speed = 4.5;
 const stepHeight = 0.2;
 let playerBaseY = 0;
 
-const SPAWN = new THREE.Vector3(0, 0, 0);
+const SPAWN = new THREE.Vector3(0, 7, 1.5);
 
 init();
 
@@ -299,4 +299,5 @@ function animate(){
 
     renderer.render(scene, camera);
 }
+
 
