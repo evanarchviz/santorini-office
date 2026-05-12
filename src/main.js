@@ -326,10 +326,10 @@ async function init(){
                 ) return;
 
                 yawObject.rotation.y -=
-                    e.movementX * 0.01;
+                    e.movementX * 0.004;
 
                 pitch -=
-                    e.movementY * 0.01;
+                    e.movementY * 0.004;
 
                 pitch = Math.max(
                     -Math.PI / 2,
@@ -580,10 +580,10 @@ function setupMobileControls() {
                         touch.clientY;
 
                     yawObject.rotation.y -=
-                        deltaX * 0.002;
+                        deltaX * 0.05;
 
                     pitch -=
-                        deltaY * 0.002;
+                        deltaY * 0.05;
 
                     pitch = Math.max(
                         -Math.PI / 2,
