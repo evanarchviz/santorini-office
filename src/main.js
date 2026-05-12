@@ -580,10 +580,10 @@ function setupMobileControls() {
                         touch.clientY;
 
                     yawObject.rotation.y -=
-                        deltaX * 1;
+                        deltaX * 0.1;
 
                     pitch -=
-                        deltaY * 1;
+                        deltaY * 0.1;
 
                     pitch = Math.max(
                         -Math.PI / 2,
