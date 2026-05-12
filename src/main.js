@@ -103,6 +103,12 @@ async function init(){
         model = gltf.scene;
 
         model.traverse((child) => {
+    if (child.isMesh && child.name === "Cube") {
+        child.visible = false;
+    }
+});
+        
+        model.traverse((child) => {
             if (
                 child.isMesh &&
                 child.material &&
