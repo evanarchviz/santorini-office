@@ -2,12 +2,19 @@ import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "https://unpkg.com/three@0.160.0/examples/jsm/libs/meshopt_decoder.module.js";
 import { RGBELoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/RGBELoader.js";
+import { VRButton } from "https://unpkg.com/three@0.160.0/examples/jsm/webxr/VRButton.js";
 
 let scene, camera, renderer;
 let model;
 let clock = new THREE.Clock();
 
-let move = { forward:false, backward:false, left:false, right:false };
+let move = {
+    forward:false,
+    backward:false,
+    left:false,
+    right:false
+};
+
 let canMove = false;
 let isMobile = false;
 
@@ -17,11 +24,17 @@ let pitch = 0;
 
 const playerHeight = 1.7;
 const playerRadius = 0.35;
-const speed = 4.5;
+const speed = 2;
+const vrSpeed = 2;
 const stepHeight = 0.2;
+
 let playerBaseY = 0;
 
-const SPAWN = new THREE.Vector3(0, 1.5, 5);
+const SPAWN = new THREE.Vector3(
+    0,
+    1.5,
+    5
+);
 
 init();
 
