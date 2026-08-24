@@ -20,6 +20,7 @@ const controllerModels = [];
 
 let canMove = false;
 let isMobile = false;
+let isIOS = false;
 let pitch = 0;
 let playerBaseY = 0;
 let verticalVelocity = 0;
@@ -60,6 +61,11 @@ init().catch((error) => showFatalError("Experience failed to start.", error));
 function detectMobile() {
     return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent) ||
         (window.matchMedia("(pointer: coarse)").matches && window.innerWidth < 900);
+}
+
+function detectIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 }
 
 function setStartScreenEnabled(enabled) {
@@ -155,6 +161,10 @@ async function loadSceneModel() {
 }
 
 function addVRButton() {
+    if (isIOS) {
+        console.info("WebXR VR button disabled on iOS; using touch walkthrough controls.");
+        return;
+    }
     if (document.getElementById("VRButton")) return;
     document.body.appendChild(VRButton.createButton(renderer));
 }
@@ -363,6 +373,7 @@ function addVRControllers() {
 
 async function init() {
     isMobile = detectMobile();
+    isIOS = detectIOS();
 
     const container = document.getElementById("container") || document.body;
     const controlsText = document.getElementById("controlsText");
@@ -379,7 +390,7 @@ async function init() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.xr.enabled = true;
+    renderer.xr.enabled = !isIOS;
     container.appendChild(renderer.domElement);
 
     window.addEventListener("resize", () => {
@@ -395,7 +406,7 @@ async function init() {
     pitchObject.add(camera);
     scene.add(yawObject);
 
-    addVRControllers();
+    if (!isIOS) addVRControllers();
     teleportMarker = createTeleportMarker();
     scene.add(teleportMarker);
 
@@ -437,7 +448,7 @@ function setupInputControls() {
         ui.startScreen?.addEventListener("click", async () => {
             ui.startScreen.style.display = "none";
             canMove = true;
-            if (document.documentElement.requestFullscreen) {
+            if (!isIOS && document.documentElement.requestFullscreen) {
                 try { await document.documentElement.requestFullscreen(); }
                 catch (error) { console.warn("Fullscreen request failed. Continuing without fullscreen.", error); }
             }
